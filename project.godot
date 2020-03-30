@@ -16,7 +16,18 @@ _global_script_class_icons={
 [application]
 
 config/name="Flappy Bird"
+run/main_scene="res://stages/game_stage.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=144
+window/size/height=256
+window/size/resizable=false
+window/size/test_width=288
+window/size/test_height=512
+window/stretch/mode="2d"
+window/stretch/aspect="keep_height"
 
 [rendering]
 
