@@ -1,9 +1,22 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://sprites/background_day.png" type="Texture" id=1]
+[ext_resource path="res://scenes/Bird.tscn" type="PackedScene" id=2]
+[ext_resource path="res://sprites/Camera.gd" type="Script" id=3]
+[ext_resource path="res://scenes/Spawner_ground.tscn" type="PackedScene" id=4]
 
 [node name="Node2D" type="Node2D"]
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 centered = false
+
+[node name="Bird" parent="." instance=ExtResource( 2 )]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2( -36, 0 )
+anchor_mode = 0
+current = true
+script = ExtResource( 3 )
+
+[node name="Spawner_ground" parent="." instance=ExtResource( 4 )]

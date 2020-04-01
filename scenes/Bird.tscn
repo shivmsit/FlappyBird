@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://sprites/bird_orange_0.png" type="Texture" id=1]
 [ext_resource path="res://sprites/bird_orange_2.png" type="Texture" id=2]
@@ -13,8 +13,12 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="CircleShape2D" id=2]
+radius = 6.5
+
 [node name="Bird" type="RigidBody2D"]
 position = Vector2( 72, 100 )
+gravity_scale = 5.0
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_group_": true
@@ -24,5 +28,6 @@ __meta__ = {
 frames = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
