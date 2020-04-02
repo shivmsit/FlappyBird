@@ -12,5 +12,4 @@ func _ready():
 func _process(delta):
 	if bottom_right.get_global_position().x <= camera.get_total_pos().x:
 		queue_free()
-		emit_signal("distroyed")
 	pass

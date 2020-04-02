@@ -12,8 +12,8 @@ func _ready():
 func spwan_ground():
 	var new_ground = scn_ground.instance()
 	new_ground.position = position
-	new_ground.connect("distroyed", self, "spwan_ground")
-	new_ground.connect("distroyed", self, "go_next_pos")
+	new_ground.connect("tree_exited", self, "spwan_ground")
+	new_ground.connect("tree_exited", self, "go_next_pos")
 	get_node("container").add_child(new_ground)
 	pass
 	
