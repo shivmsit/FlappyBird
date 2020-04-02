@@ -10,12 +10,12 @@ extents = Vector2( 84, 28 )
 position = Vector2( 0, 256 )
 script = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( 0, -56 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="shape" type="CollisionShape2D" parent="."]
 position = Vector2( 84, -28 )
 shape = SubResource( 1 )
 
