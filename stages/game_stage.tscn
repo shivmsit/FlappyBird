@@ -13,7 +13,7 @@ centered = false
 
 [node name="Bird" parent="." instance=ExtResource( 2 )]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="."]
 offset = Vector2( -36, 0 )
 anchor_mode = 0
 current = true
