@@ -5,7 +5,6 @@
 [ext_resource path="res://sprites/bird_orange_1.png" type="Texture" id=3]
 [ext_resource path="res://scripts/Bird.gd" type="Script" id=4]
 
-
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 1 ), ExtResource( 3 ), ExtResource( 2 ) ],
@@ -20,6 +19,7 @@ radius = 6.5
 [node name="Bird" type="RigidBody2D"]
 position = Vector2( 72, 100 )
 gravity_scale = 5.0
+linear_damp = 0.0
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_group_": true
