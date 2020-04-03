@@ -1,11 +1,12 @@
 # script: bird
 extends RigidBody2D
 
-onready var state = FlappingState.new(self)
+onready var state = FlyingState.new(self)
 const STATE_FLYING		= 0
 const STATE_FLAPPING		= 1
 const STATE_HIT			= 2
 const STATE_GROUNDED		= 3
+var speed = 50
 
 func _ready():
 	pass
@@ -14,6 +15,7 @@ func _physics_process(delta):
 func _input(event):
 	state.input(event)
 func set_state(new_state):
+	state.exit()
 	if new_state == STATE_FLYING:
 		state = FlyingState.new(self)
 	elif new_state == STATE_FLAPPING:
@@ -36,21 +38,27 @@ func get_state():
 # state management classes
 class FlyingState:
 	var bird
+	var prev_gravity_scale
 	func _init(bird):
 		self.bird = bird
+		bird.get_node("anim").play("flying")
+		prev_gravity_scale = bird.get_gravity_scale()
+		bird.set_linear_velocity(Vector2(bird.speed, bird.get_linear_velocity().y))
+		bird.set_gravity_scale(0)
 		pass
 	func update(delta):
 		pass	
 	func input(event):
 		pass
 	func exit():
+		bird.set_gravity_scale(prev_gravity_scale)
 		pass
 		
 class FlappingState:
 	var bird
 	func _init(bird):
 		self.bird = bird
-		bird.set_linear_velocity(Vector2(50, bird.get_linear_velocity().x))
+		bird.set_linear_velocity(Vector2(bird.speed, bird.get_linear_velocity().y))
 	func update(delta):
 		if bird.rotation < deg2rad(-30):
 			bird.rotation = deg2rad(-30)
@@ -65,6 +73,7 @@ class FlappingState:
 	func flap():
 		bird.set_linear_velocity(Vector2(bird.get_linear_velocity().x, -150))
 		bird.set_angular_velocity(-3)
+		bird.get_node("anim").play("flap")
 
 class HitState:
 	var bird

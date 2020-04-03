@@ -3,7 +3,7 @@
 extends StaticBody2D
 
 onready var bottom_right = get_node("bottom_right")
-onready var camera = utils.get_main_node().get_node("Camera")
+onready var camera = utils.get_main_node().get_node("camera")
 
 
 func _ready():

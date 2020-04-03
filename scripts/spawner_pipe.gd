@@ -10,15 +10,16 @@ const OFFSET_X = 65
 const AMOUNT_TO_FILL_VIEW = 3
 
 func _ready():
-	go_next_pos()
-	for i in range(AMOUNT_TO_FILL_VIEW):
-		spawn_and_move()
-	pass # Replace with function body.
+	pass
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 
+func start():
+	go_next_pos()
+	for i in range(AMOUNT_TO_FILL_VIEW):
+		spawn_and_move()
+	
 func spawn_and_move():
 	go_next_pos()
 	spawn_pipe()
