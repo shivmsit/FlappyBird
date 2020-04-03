@@ -20,8 +20,8 @@ func _ready():
 #	pass
 
 func spawn_and_move():
-	spawn_pipe()
 	go_next_pos()
+	spawn_pipe()
 	pass
 	
 func spawn_pipe():
