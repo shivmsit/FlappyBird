@@ -1,6 +1,6 @@
 extends Node2D
 const GROUND_WIDTH = 168
-const scn_ground = preload("res://scenes/Ground.tscn")
+const scn_ground = preload("res://scenes/ground.tscn")
 const AMOUNT_TO_FILL_VIEW = 2
 
 func _ready():
