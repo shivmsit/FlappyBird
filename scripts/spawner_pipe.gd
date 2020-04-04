@@ -12,7 +12,7 @@ const AMOUNT_TO_FILL_VIEW = 3
 func _ready():
 	var bird = utils.get_main_node().get_node("bird")
 	if (bird):
-		bird.connect("state_changed", self, "_on_bird_state_changed")
+		bird.connect("state_changed", self, "_on_bird_state_changed", [], CONNECT_ONESHOT)
 	pass
 	
 func _on_bird_state_changed(bird):
@@ -24,13 +24,23 @@ func _on_bird_state_changed(bird):
 #	pass
 
 func start():
-	go_next_pos()
+	go_init_pos()
 	for i in range(AMOUNT_TO_FILL_VIEW):
 		spawn_and_move()
-	
+
+func go_init_pos():
+	randomize()
+	var init_pos = position
+	init_pos.x += get_viewport_rect().size.x + PIPE_WIDTH/2
+	init_pos.y = rand_range(0 + OFFSET_Y, get_viewport_rect().size.y - GROUND_HEIGHT - OFFSET_Y)
+	var camera = utils.get_main_node().get_node("camera")
+	if camera:
+		init_pos.x += camera.get_total_pos().x
+	position = init_pos
+	pass
 func spawn_and_move():
-	go_next_pos()
 	spawn_pipe()
+	go_next_pos()
 	pass
 	
 func spawn_pipe():
