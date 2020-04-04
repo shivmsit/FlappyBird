@@ -1,6 +1,7 @@
 extends Label
 
 func _ready():
+	text = str(game.score_current)
 	game.connect("score_current_changed", self, "_on_score_current_changed")
 	pass
 
