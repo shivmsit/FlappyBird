@@ -92,6 +92,8 @@ tracks/1/keys = {
 [node name="bird" type="RigidBody2D"]
 position = Vector2( 36, 120 )
 gravity_scale = 5.0
+contacts_reported = 1
+contact_monitor = true
 linear_damp = 0.0
 script = ExtResource( 4 )
 __meta__ = {

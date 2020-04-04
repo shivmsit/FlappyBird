@@ -22,6 +22,7 @@ config/icon="res://icon.png"
 [autoload]
 
 utils="*res://scripts/utils.gd"
+game="*res://scripts/game.gd"
 
 [display]
 

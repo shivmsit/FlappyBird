@@ -6,6 +6,7 @@ onready var camera = utils.get_main_node().get_node("camera")
 
 
 func _ready():
+	add_to_group(game.GROUP_PIPES)
 	pass # Replace with function body.
 
 func _process(delta):
