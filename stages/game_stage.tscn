@@ -21,6 +21,7 @@ extends TextureButton
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	connect(\"pressed\", self, \"_on_pressed\")
+	grab_focus()
 	pass # Replace with function body.
 
 
