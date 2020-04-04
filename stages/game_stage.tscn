@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bird.tscn" type="PackedScene" id=2]
@@ -6,6 +6,12 @@
 [ext_resource path="res://scenes/spawner_ground.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/spawner_pipe.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sprites/instructions.png" type="Texture" id=6]
+[ext_resource path="res://fonts/font_score.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://scripts/lbl_score.gd" type="Script" id=8]
+
+[sub_resource type="DynamicFont" id=2]
+size = 14
+font_data = ExtResource( 7 )
 
 [sub_resource type="GDScript" id=1]
 resource_name = "btn_instruction"
@@ -53,6 +59,19 @@ script = ExtResource( 3 )
 [node name="spawner_pipe" parent="." instance=ExtResource( 5 )]
 
 [node name="hud" type="CanvasLayer" parent="."]
+
+[node name="lbl_score" type="Label" parent="hud"]
+margin_top = 10.0
+margin_right = 144.0
+margin_bottom = 24.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "0"
+align = 1
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="btn_instruction" type="TextureButton" parent="hud"]
 margin_right = 144.0

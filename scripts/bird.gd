@@ -10,6 +10,7 @@ var speed = 50
 signal state_changed
 
 func _ready():
+	add_to_group(game.GROUP_BIRDS)
 	connect("body_entered", self, "_on_body_entered")
 	pass
 func _physics_process(delta):	
