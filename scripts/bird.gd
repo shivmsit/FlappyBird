@@ -7,6 +7,7 @@ const STATE_FLAPPING		= 1
 const STATE_HIT			= 2
 const STATE_GROUNDED		= 3
 var speed = 50
+signal state_changed
 
 func _ready():
 	pass
@@ -24,6 +25,7 @@ func set_state(new_state):
 		state = HitState.new(self)
 	elif new_state == STATE_GROUNDED:
 		state = GroundedState.new(self)
+	emit_signal("state_changed", self)
 	pass
 func get_state():
 	if state is FlyingState:
