@@ -61,6 +61,7 @@ class FlappingState:
 	func _init(bird):
 		self.bird = bird
 		bird.set_linear_velocity(Vector2(bird.speed, bird.get_linear_velocity().y))
+		flap()
 	func update(delta):
 		if bird.rotation < deg2rad(-30):
 			bird.rotation = deg2rad(-30)

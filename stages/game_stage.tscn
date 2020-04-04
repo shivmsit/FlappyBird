@@ -38,7 +38,7 @@ func _on_pressed():
 [node name="world" type="Node2D"]
 
 [node name="bird" parent="." instance=ExtResource( 2 )]
-position = Vector2( 36, 70 )
+position = Vector2( 35, 128 )
 
 [node name="camera" type="Camera2D" parent="."]
 offset = Vector2( -36, 0 )
