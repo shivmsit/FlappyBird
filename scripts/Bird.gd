@@ -52,6 +52,8 @@ class FlyingState:
 		pass
 	func exit():
 		bird.set_gravity_scale(prev_gravity_scale)
+		bird.get_node("anim").stop();
+		bird.get_node("anim_sprite").position  = Vector2(0,0)
 		pass
 		
 class FlappingState:
