@@ -35,10 +35,10 @@ tracks/0/keys = {
 }
 
 [node name="stage_manager" type="CanvasLayer"]
+layer = -2
 script = ExtResource( 2 )
 
 [node name="color_black" type="ColorRect" parent="."]
-modulate = Color( 1, 1, 1, 0 )
 margin_right = 144.0
 margin_bottom = 256.0
 color = Color( 0, 0, 0, 1 )
