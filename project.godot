@@ -23,6 +23,7 @@ config/icon="res://icon.png"
 
 utils="*res://scripts/utils.gd"
 game="*res://scripts/game.gd"
+stage_manager="*res://scenes/stage_manager.tscn"
 
 [display]
 

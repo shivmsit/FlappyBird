@@ -5,6 +5,7 @@ func _ready():
 	pass # Replace with function body.
 
 func _on_button_pressed():
+	stage_manager.change_stage("res://stages/game_stage.tscn")
 	get_tree().reload_current_scene()
 	pass
 
