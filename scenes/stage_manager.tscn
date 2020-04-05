@@ -47,5 +47,6 @@ __meta__ = {
 }
 
 [node name="amin" type="AnimationPlayer" parent="."]
+playback_speed = 2.0
 anims/fade_in = SubResource( 1 )
 anims/fade_out = SubResource( 2 )
