@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://scenes/background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bird.tscn" type="PackedScene" id=2]
@@ -49,6 +49,41 @@ func _on_pressed():
 	if bird:
 		bird.set_state(bird.STATE_FLAPPING)
 	hide()
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
+[sub_resource type="GDScript" id=5]
+resource_name = "tex_medal"
+script/source = "extends TextureRect
+
+
+const medal_bronz 	= preload(\"res://sprites/medal_bronze.png\")
+const medal_silver 	= preload(\"res://sprites/medal_silver.png\")
+const medal_gold		= preload(\"res://sprites/medal_gold.png\")
+const medal_platinum	= preload(\"res://sprites/medal_platinum.png\")
+
+func _ready():
+	hide()
+	var hbox_score_last = utils.get_main_node().find_node(\"hbox_score_last\")
+	if hbox_score_last:
+		hbox_score_last.connect(\"counter_finished\", self, \"show_madel\")
+	pass
+
+func show_madel():	
+	var texture = null
+	
+	if game.score_current >=  game.MEDAL_BRONZ: texture = medal_bronz
+	if game.score_current >= game.MEDAL_SILVER: texture = medal_silver
+	if game.score_current >= game.MEDAL_GOLD: texture = medal_gold
+	if game.score_current >= game.MEDAL_PLATINUM: texture = medal_platinum
+	
+	if texture != null:
+		set_texture(texture)
+		show()
+	pass
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
@@ -249,6 +284,7 @@ margin_top = 21.0
 margin_right = 35.0
 margin_bottom = 43.0
 texture = ExtResource( 22 )
+script = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
