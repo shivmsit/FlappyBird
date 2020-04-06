@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://scenes/background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bird.tscn" type="PackedScene" id=2]
@@ -20,6 +20,8 @@
 [ext_resource path="res://scripts/hbox_score_last.gd" type="Script" id=18]
 [ext_resource path="res://scripts/hbox_score_best.gd" type="Script" id=19]
 [ext_resource path="res://sprites/label_new.png" type="Texture" id=20]
+[ext_resource path="res://scripts/tex_new.gd" type="Script" id=21]
+[ext_resource path="res://sprites/medal_bronze.png" type="Texture" id=22]
 
 [sub_resource type="DynamicFont" id=1]
 size = 14
@@ -236,6 +238,17 @@ margin_top = 29.3944
 margin_right = 82.1649
 margin_bottom = 36.3944
 texture = ExtResource( 20 )
+script = ExtResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="tex_medal" type="TextureRect" parent="hud/Container/tex_panelscore"]
+margin_left = 13.0
+margin_top = 21.0
+margin_right = 35.0
+margin_bottom = 43.0
+texture = ExtResource( 22 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -1,6 +1,7 @@
 extends Container
 
 func _ready():
+	hide()
 	var bird = utils.get_main_node().get_node("bird");
 	if bird:
 		bird.connect("state_changed", self, "_on_bird_state_changed")
