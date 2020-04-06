@@ -16,8 +16,6 @@ func _ready():
 	pass # Replace with function body.
 	
 func _on_stage_changed():
-	if score_current > score_best:
-		score_best = score_current
 	score_current = 0
 	pass
 	
@@ -27,6 +25,7 @@ func _set_score_current(new_val):
 	pass
 	
 func _set_score_best(new_val):
-	score_best = new_val
-	emit_signal("score_best_changed")
+	if new_val > score_best:
+		score_best = new_val
+		emit_signal("score_best_changed")
 	pass
