@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://scenes/background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bird.tscn" type="PackedScene" id=2]
@@ -26,10 +26,25 @@
 [ext_resource path="res://sprites/spark_0.png" type="Texture" id=24]
 [ext_resource path="res://sprites/spark_1.png" type="Texture" id=25]
 [ext_resource path="res://scripts/spr_spark.gd" type="Script" id=26]
+[ext_resource path="res://sprites/button_pause.png" type="Texture" id=27]
+[ext_resource path="res://sprites/button_resume.png" type="Texture" id=28]
 
 [sub_resource type="DynamicFont" id=1]
 size = 14
 font_data = ExtResource( 7 )
+
+[sub_resource type="GDScript" id=8]
+resource_name = "btn_pause"
+script/source = "extends TextureButton
+
+func _ready():
+	connect(\"pressed\", self, \"_on_pressed\")
+	pass
+	
+func _on_pressed():
+	get_tree().set_pause(true)
+	pass
+"
 
 [sub_resource type="GDScript" id=2]
 script/source = "#script: btn_instruction (built-in)
@@ -199,6 +214,43 @@ tracks/3/keys = {
 "values": [ Vector2( 16, 270 ), Vector2( 16, 90 ) ]
 }
 
+[sub_resource type="GDScript" id=9]
+resource_name = "con_pause"
+script/source = "extends Container
+
+func _ready():
+	hide()
+	var btn_pause = utils.get_main_node().find_node(\"btn_pause\")
+	if btn_pause:
+		btn_pause.connect(\"pressed\", self, \"_on_pause_pressed\")
+		
+	var btn_resume = utils.get_main_node().find_node(\"btn_resume\")
+	if btn_resume:
+		btn_resume.connect(\"pressed\", self, \"_on_resume_pressed\")
+	pass
+
+func _on_pause_pressed():
+	show()
+	pass
+
+func _on_resume_pressed():
+	hide()
+	pass
+"
+
+[sub_resource type="GDScript" id=10]
+resource_name = "btn_resume"
+script/source = "extends TextureButton
+
+func _ready():
+	connect(\"pressed\", self, \"_on_pressed\")
+	pass
+
+func _on_pressed():
+	get_tree().set_pause(false)
+	pass
+"
+
 [node name="world" type="Node2D"]
 
 [node name="bird" parent="." instance=ExtResource( 2 )]
@@ -231,6 +283,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="btn_pause" type="TextureButton" parent="hud"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 23.0
+margin_bottom = 24.0
+texture_normal = ExtResource( 27 )
+script = SubResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="btn_instruction" type="TextureButton" parent="hud"]
 margin_right = 144.0
 margin_bottom = 256.0
@@ -249,7 +312,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Container" type="Container" parent="hud"]
+[node name="con_instruciton" type="Container" parent="hud"]
+visible = false
 margin_right = 144.0
 margin_bottom = 256.0
 script = ExtResource( 15 )
@@ -257,7 +321,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="tex_gameover" type="TextureRect" parent="hud/Container"]
+[node name="tex_gameover" type="TextureRect" parent="hud/con_instruciton"]
 margin_left = 24.0
 margin_top = 50.0
 margin_right = 120.0
@@ -267,7 +331,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="tex_panelscore" type="TextureRect" parent="hud/Container"]
+[node name="tex_panelscore" type="TextureRect" parent="hud/con_instruciton"]
 margin_left = 16.0
 margin_top = 90.0
 margin_right = 129.0
@@ -277,7 +341,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="hbox_score_last" type="HBoxContainer" parent="hud/Container/tex_panelscore"]
+[node name="hbox_score_last" type="HBoxContainer" parent="hud/con_instruciton/tex_panelscore"]
 margin_left = 60.3482
 margin_top = 16.0
 margin_right = 102.348
@@ -289,13 +353,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="tex_number_0" type="TextureRect" parent="hud/Container/tex_panelscore/hbox_score_last"]
+[node name="tex_number_0" type="TextureRect" parent="hud/con_instruciton/tex_panelscore/hbox_score_last"]
 margin_left = 35.0
 margin_right = 42.0
 margin_bottom = 10.0
 texture = ExtResource( 17 )
 
-[node name="hbox_score_best" type="HBoxContainer" parent="hud/Container/tex_panelscore"]
+[node name="hbox_score_best" type="HBoxContainer" parent="hud/con_instruciton/tex_panelscore"]
 margin_left = 60.3482
 margin_top = 37.0
 margin_right = 102.348
@@ -307,13 +371,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="tex_number_0" type="TextureRect" parent="hud/Container/tex_panelscore/hbox_score_best"]
+[node name="tex_number_0" type="TextureRect" parent="hud/con_instruciton/tex_panelscore/hbox_score_best"]
 margin_left = 35.0
 margin_right = 42.0
 margin_bottom = 10.0
 texture = ExtResource( 17 )
 
-[node name="tex_new" type="TextureRect" parent="hud/Container/tex_panelscore"]
+[node name="tex_new" type="TextureRect" parent="hud/con_instruciton/tex_panelscore"]
 margin_left = 66.1649
 margin_top = 29.3944
 margin_right = 82.1649
@@ -324,7 +388,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="tex_medal" type="TextureRect" parent="hud/Container/tex_panelscore"]
+[node name="tex_medal" type="TextureRect" parent="hud/con_instruciton/tex_panelscore"]
 margin_left = 13.0
 margin_top = 21.0
 margin_right = 35.0
@@ -335,15 +399,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="spr_spark" type="AnimatedSprite" parent="hud/Container/tex_panelscore/tex_medal"]
+[node name="spr_spark" type="AnimatedSprite" parent="hud/con_instruciton/tex_panelscore/tex_medal"]
 frames = SubResource( 6 )
 script = ExtResource( 26 )
 
-[node name="anim" type="AnimationPlayer" parent="hud/Container/tex_panelscore/tex_medal/spr_spark"]
+[node name="anim" type="AnimationPlayer" parent="hud/con_instruciton/tex_panelscore/tex_medal/spr_spark"]
 playback_speed = 0.8
 anims/shine = SubResource( 7 )
 
-[node name="hbox_buttons" type="HBoxContainer" parent="hud/Container"]
+[node name="hbox_buttons" type="HBoxContainer" parent="hud/con_instruciton"]
 margin_left = 16.0
 margin_top = 160.0
 margin_right = 129.0
@@ -355,20 +419,42 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="btn_play" type="TextureButton" parent="hud/Container/hbox_buttons"]
+[node name="btn_play" type="TextureButton" parent="hud/con_instruciton/hbox_buttons"]
 margin_right = 52.0
 margin_bottom = 30.0
 texture_normal = ExtResource( 13 )
 texture_pressed = ExtResource( 12 )
 script = ExtResource( 16 )
 
-[node name="btn_score" type="TextureButton" parent="hud/Container/hbox_buttons"]
+[node name="btn_score" type="TextureButton" parent="hud/con_instruciton/hbox_buttons"]
 margin_left = 61.0
 margin_right = 113.0
 margin_bottom = 30.0
 texture_normal = ExtResource( 11 )
 texture_pressed = ExtResource( 14 )
 
-[node name="anim" type="AnimationPlayer" parent="hud/Container"]
+[node name="anim" type="AnimationPlayer" parent="hud/con_instruciton"]
 playback_speed = 1.5
 anims/show = SubResource( 3 )
+
+[node name="con_pause" type="Container" parent="hud"]
+margin_right = 144.0
+margin_bottom = 256.0
+script = SubResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="hud/con_pause"]
+margin_right = 144.0
+margin_bottom = 256.0
+color = Color( 0, 0, 0, 0.301961 )
+
+[node name="btn_resume" type="TextureButton" parent="hud/con_pause"]
+pause_mode = 2
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 23.0
+margin_bottom = 24.0
+texture_normal = ExtResource( 28 )
+script = SubResource( 10 )

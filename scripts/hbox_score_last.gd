@@ -15,7 +15,7 @@ const sprite_number = [
 
 signal counter_finished
 func _ready():
-	var anim = utils.get_main_node().get_node("hud/Container/anim")
+	var anim = utils.get_main_node().get_node("hud/con_instruciton/anim")
 	yield(anim, "animation_finished") #yield till animaiton finish
 	count_to_score()
 	pass	
