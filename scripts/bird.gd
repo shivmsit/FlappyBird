@@ -78,7 +78,7 @@ class FlappingState:
 		if bird.get_linear_velocity().y > 0:
 			bird.set_angular_velocity(1.5)
 	func input(event):
-		if event.is_action_pressed("flap"):
+		if event.is_action_pressed("flap") or (event is InputEventScreenTouch and event.pressed):
 			flap()
 	func exit():
 		pass

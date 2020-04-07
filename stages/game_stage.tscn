@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://scenes/background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bird.tscn" type="PackedScene" id=2]
@@ -22,6 +22,9 @@
 [ext_resource path="res://sprites/label_new.png" type="Texture" id=20]
 [ext_resource path="res://scripts/tex_new.gd" type="Script" id=21]
 [ext_resource path="res://sprites/medal_bronze.png" type="Texture" id=22]
+[ext_resource path="res://sprites/spark_2.png" type="Texture" id=23]
+[ext_resource path="res://sprites/spark_0.png" type="Texture" id=24]
+[ext_resource path="res://sprites/spark_1.png" type="Texture" id=25]
 
 [sub_resource type="DynamicFont" id=1]
 size = 14
@@ -88,6 +91,31 @@ func show_madel():
 #func _process(delta):
 #	pass
 "
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ ExtResource( 24 ), ExtResource( 25 ), ExtResource( 23 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=7]
+resource_name = "shine"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 1, 0 ]
+}
 
 [sub_resource type="GDScript" id=4]
 resource_name = "hbox_button"
@@ -288,6 +316,13 @@ script = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="spr_spark" type="AnimatedSprite" parent="hud/Container/tex_panelscore/tex_medal"]
+frames = SubResource( 6 )
+
+[node name="anim" type="AnimationPlayer" parent="hud/Container/tex_panelscore/tex_medal/spr_spark"]
+playback_speed = 0.8
+anims/shine = SubResource( 7 )
 
 [node name="hbox_buttons" type="HBoxContainer" parent="hud/Container"]
 margin_left = 16.0
