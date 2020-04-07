@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://scenes/background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bird.tscn" type="PackedScene" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://sprites/spark_2.png" type="Texture" id=23]
 [ext_resource path="res://sprites/spark_0.png" type="Texture" id=24]
 [ext_resource path="res://sprites/spark_1.png" type="Texture" id=25]
+[ext_resource path="res://scripts/spr_spark.gd" type="Script" id=26]
 
 [sub_resource type="DynamicFont" id=1]
 size = 14
@@ -67,6 +68,8 @@ const medal_silver 	= preload(\"res://sprites/medal_silver.png\")
 const medal_gold		= preload(\"res://sprites/medal_gold.png\")
 const medal_platinum	= preload(\"res://sprites/medal_platinum.png\")
 
+signal medal_shown
+
 func _ready():
 	hide()
 	var hbox_score_last = utils.get_main_node().find_node(\"hbox_score_last\")
@@ -85,6 +88,7 @@ func show_madel():
 	if texture != null:
 		set_texture(texture)
 		show()
+		emit_signal(\"medal_shown\")
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -115,6 +119,20 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2, 1, 0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "to_random_pos"
+} ]
 }
 
 [sub_resource type="GDScript" id=4]
@@ -319,6 +337,7 @@ __meta__ = {
 
 [node name="spr_spark" type="AnimatedSprite" parent="hud/Container/tex_panelscore/tex_medal"]
 frames = SubResource( 6 )
+script = ExtResource( 26 )
 
 [node name="anim" type="AnimationPlayer" parent="hud/Container/tex_panelscore/tex_medal/spr_spark"]
 playback_speed = 0.8
@@ -353,3 +372,10 @@ texture_pressed = ExtResource( 14 )
 [node name="anim" type="AnimationPlayer" parent="hud/Container"]
 playback_speed = 1.5
 anims/show = SubResource( 3 )
+
+[node name="TextureButton" type="TextureButton" parent="hud"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
