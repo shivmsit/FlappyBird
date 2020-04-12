@@ -8,6 +8,7 @@ const STATE_HIT			= 2
 const STATE_GROUNDED		= 3
 var speed = 50
 signal state_changed
+var prev_state = STATE_FLAPPING
 
 func _ready():
 	add_to_group(game.GROUP_BIRDS)
@@ -23,6 +24,7 @@ func _on_body_entered(other_body):
 		state.on_body_entered(other_body)
 	pass
 func set_state(new_state):
+	prev_state = get_state()
 	state.exit()
 	if new_state == STATE_FLYING:
 		state = FlyingState.new(self)
@@ -92,6 +94,7 @@ class FlappingState:
 		bird.set_linear_velocity(Vector2(bird.get_linear_velocity().x, -150))
 		bird.set_angular_velocity(-3)
 		bird.get_node("anim").play("flap")
+		bird.get_node("sfx_wing").play()
 
 class HitState:
 	var bird
@@ -101,6 +104,8 @@ class HitState:
 		bird.set_angular_velocity(2)
 		var other_body = bird.get_colliding_bodies()[0]
 		bird.add_collision_exception_with(other_body)
+		bird.get_node("sfx_hit").play()
+		bird.get_node("sfx_die").play()
 		pass
 	func update(delta):
 		pass	
@@ -119,6 +124,8 @@ class GroundedState:
 		self.bird = bird
 		bird.set_linear_velocity(Vector2(0,0))
 		bird.set_angular_velocity(0)
+		if bird.prev_state != bird.STATE_HIT:
+			bird.get_node("sfx_hit").play()
 		pass
 	func update(delta):
 		pass	

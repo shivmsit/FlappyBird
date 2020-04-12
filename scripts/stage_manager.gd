@@ -13,6 +13,7 @@ func change_stage(stage_path):
 	var old_layer = layer
 	layer = 5
 	get_node("amin").play("fade_in")
+	get_node("sfx_swooshing").play()
 	yield(get_node("amin"), "animation_finished")
 	#change to another stage
 	get_tree().change_scene(stage_path)

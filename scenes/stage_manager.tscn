@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://audio/sfx_swooshing.wav" type="AudioStream" id=1]
 [ext_resource path="res://scripts/stage_manager.gd" type="Script" id=2]
 
 [sub_resource type="Animation" id=1]
@@ -51,3 +52,6 @@ __meta__ = {
 playback_speed = 2.0
 anims/fade_in = SubResource( 1 )
 anims/fade_out = SubResource( 2 )
+
+[node name="sfx_swooshing" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )

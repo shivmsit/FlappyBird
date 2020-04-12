@@ -8,5 +8,6 @@ func _ready():
 func _on_body_entered(other_body):
 	if other_body.is_in_group(game.GROUP_BIRDS):
 		game.score_current += 1
+		get_node("sfx_point").play()
 		pass
 	pass
