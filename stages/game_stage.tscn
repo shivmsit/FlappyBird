@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://scenes/background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bird.tscn" type="PackedScene" id=2]
@@ -28,25 +28,34 @@
 [ext_resource path="res://scripts/spr_spark.gd" type="Script" id=26]
 [ext_resource path="res://sprites/button_pause.png" type="Texture" id=27]
 [ext_resource path="res://sprites/button_resume.png" type="Texture" id=28]
+[ext_resource path="res://sprites/button_menu.png" type="Texture" id=29]
 
 [sub_resource type="DynamicFont" id=1]
 size = 14
 font_data = ExtResource( 7 )
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=2]
 resource_name = "btn_pause"
 script/source = "extends TextureButton
 
 func _ready():
 	connect(\"pressed\", self, \"_on_pressed\")
+	var bird = utils.get_main_node().get_node(\"bird\")
+	if bird:
+		bird.connect(\"state_changed\", self, \"_on_bird_state_changed\")
 	pass
 	
 func _on_pressed():
 	get_tree().set_pause(true)
 	pass
+
+func _on_bird_state_changed(bird):
+	if bird.get_state() == bird.STATE_HIT: 		hide()
+	if bird.get_state() == bird.STATE_GROUNDED: 	hide()
+	
 "
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=3]
 script/source = "#script: btn_instruction (built-in)
 extends TextureButton
 
@@ -73,7 +82,7 @@ func _on_pressed():
 #	pass
 "
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=4]
 resource_name = "tex_medal"
 script/source = "extends TextureRect
 
@@ -111,7 +120,7 @@ func show_madel():
 #	pass
 "
 
-[sub_resource type="SpriteFrames" id=6]
+[sub_resource type="SpriteFrames" id=5]
 animations = [ {
 "frames": [ ExtResource( 24 ), ExtResource( 25 ), ExtResource( 23 ) ],
 "loop": true,
@@ -119,7 +128,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 resource_name = "shine"
 length = 0.5
 loop = true
@@ -150,8 +159,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="GDScript" id=4]
-resource_name = "hbox_button"
+[sub_resource type="GDScript" id=7]
 script/source = "extends HBoxContainer
 
 func _ready():
@@ -163,8 +171,7 @@ func _ready():
 	pass # Replace with function body.
 "
 
-[sub_resource type="Animation" id=3]
-resource_name = "show"
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
 tracks/0/interp = 1
@@ -251,6 +258,20 @@ func _on_pressed():
 	pass
 "
 
+[sub_resource type="GDScript" id=11]
+resource_name = "btn_menu"
+script/source = "extends TextureButton
+
+func _ready():
+	connect(\"pressed\", self, \"_on_pressed\")
+	pass
+
+func _on_pressed():
+	get_tree().set_pause(false)
+	stage_manager.change_stage(stage_manager.MENU_STAGE)
+	pass
+"
+
 [node name="world" type="Node2D"]
 
 [node name="bird" parent="." instance=ExtResource( 2 )]
@@ -289,7 +310,7 @@ margin_top = 10.0
 margin_right = 23.0
 margin_bottom = 24.0
 texture_normal = ExtResource( 27 )
-script = SubResource( 8 )
+script = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -297,7 +318,7 @@ __meta__ = {
 [node name="btn_instruction" type="TextureButton" parent="hud"]
 margin_right = 144.0
 margin_bottom = 256.0
-script = SubResource( 2 )
+script = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -394,18 +415,18 @@ margin_top = 21.0
 margin_right = 35.0
 margin_bottom = 43.0
 texture = ExtResource( 22 )
-script = SubResource( 5 )
+script = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="spr_spark" type="AnimatedSprite" parent="hud/con_instruciton/tex_panelscore/tex_medal"]
-frames = SubResource( 6 )
+frames = SubResource( 5 )
 script = ExtResource( 26 )
 
 [node name="anim" type="AnimationPlayer" parent="hud/con_instruciton/tex_panelscore/tex_medal/spr_spark"]
 playback_speed = 0.8
-anims/shine = SubResource( 7 )
+anims/shine = SubResource( 6 )
 
 [node name="hbox_buttons" type="HBoxContainer" parent="hud/con_instruciton"]
 margin_left = 16.0
@@ -414,7 +435,7 @@ margin_right = 129.0
 margin_bottom = 190.0
 custom_constants/separation = 9
 alignment = 1
-script = SubResource( 4 )
+script = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -435,7 +456,7 @@ texture_pressed = ExtResource( 14 )
 
 [node name="anim" type="AnimationPlayer" parent="hud/con_instruciton"]
 playback_speed = 1.5
-anims/show = SubResource( 3 )
+anims/show = SubResource( 8 )
 
 [node name="con_pause" type="Container" parent="hud"]
 margin_right = 144.0
@@ -458,3 +479,12 @@ margin_right = 23.0
 margin_bottom = 24.0
 texture_normal = ExtResource( 28 )
 script = SubResource( 10 )
+
+[node name="btn_menu" type="TextureButton" parent="hud/con_pause"]
+pause_mode = 2
+margin_left = 52.0
+margin_top = 121.0
+margin_right = 92.0
+margin_bottom = 135.0
+texture_normal = ExtResource( 29 )
+script = SubResource( 11 )
