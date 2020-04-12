@@ -23,15 +23,15 @@ func _ready():
 func count_to_score():
 	var lerp_time 		= 0 
 	var lerp_duration 	= 0.5
-	while lerp_time < lerp_duration:
+	while lerp_time < lerp_duration and game.score_current > 0:
 		lerp_time += get_process_delta_time()
 		lerp_time = min (lerp_time, lerp_duration)
 		var percent = lerp_time/lerp_duration
 		set_number(int(lerp(0, game.score_current, percent)))
 		
 		yield(get_tree(), "idle_frame")
-	emit_signal("counter_finished")
 	game.score_best = game.score_current
+	emit_signal("counter_finished")
 	pass
 	
 func set_number(num):

@@ -325,7 +325,7 @@ __meta__ = {
 margin_left = 24.0
 margin_top = 50.0
 margin_right = 120.0
-margin_bottom = 72.0005
+margin_bottom = 72.0009
 texture = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
