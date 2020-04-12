@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://scenes/background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bird.tscn" type="PackedScene" id=2]
@@ -29,6 +29,44 @@
 [ext_resource path="res://sprites/button_pause.png" type="Texture" id=27]
 [ext_resource path="res://sprites/button_resume.png" type="Texture" id=28]
 [ext_resource path="res://sprites/button_menu.png" type="Texture" id=29]
+
+[sub_resource type="GDScript" id=12]
+resource_name = "shaker"
+script/source = "extends Node
+
+var time = 0
+const duration = 0.18
+const magnitude = 3
+onready var camera = get_parent()
+ 
+func _ready():
+	var bird = utils.get_main_node().get_node(\"bird\")
+	if bird:
+		bird.connect(\"state_changed\", self, \"_on_bird_state_changed\")	
+	pass
+
+#func _process(delta):
+#	pass
+
+func shake():
+	var initial_offset = camera.get_offset()
+	while time < duration:
+		time += get_process_delta_time()
+		time = min(time, duration)
+		var offset = Vector2()
+		offset.x = rand_range(-magnitude, magnitude)
+		offset.y = rand_range(-magnitude, magnitude)	
+		camera.set_offset(initial_offset + offset)
+		yield(get_tree(), \"idle_frame\")
+	camera.set_offset(initial_offset)
+	time = 0
+	pass
+	
+func _on_bird_state_changed(bird):
+	if bird.get_state() == bird.STATE_HIT or bird.get_state() == bird.STATE_GROUNDED:
+		shake()
+	pass
+"
 
 [sub_resource type="DynamicFont" id=1]
 size = 14
@@ -282,6 +320,9 @@ offset = Vector2( -36, 0 )
 anchor_mode = 0
 current = true
 script = ExtResource( 3 )
+
+[node name="shaker" type="Node" parent="camera"]
+script = SubResource( 12 )
 
 [node name="spawner_ground" parent="." instance=ExtResource( 4 )]
 
